@@ -9,7 +9,8 @@ ticker_names = ["AAPL", "MSFT", "GOOG", "AMZN", "TSLA",
                 "ORCL", "CSCO", "ACN", "WFC", "VZ", "COP", "NEE", "CRM",
                 "BMY", "TXN", "SCHW", "UPS", "NKE", "LIN", "QCOM", "MS",
                 "ADBE", "PM"]
-tn_sample = ["AAPL", "MSFT"]
+# small sample data set
+# tn_sample = ["AAPL", "MSFT"] 
 data_num = []
 data_sum = 0
 total_data_list = []
@@ -26,9 +27,9 @@ total_data_list = []
 # print(data_sum)
 
 total_data_list = []
-for index, ticker in enumerate(tn_sample):
+for index, ticker in enumerate(ticker_names):
     data = yf.download(ticker,"2012-01-01","2022-10-10")
-    data["StockID"] = data["Date"] + data["TickerName"]
+    data["StockCapRank"] = data["Date"] + data["TickerName"]
     data["TickerName"] = ticker
     total_data_list.append(data)
 
