@@ -5,7 +5,7 @@ import java.util.Date;
 public class Users {
 	protected String userName;
 	protected String password;//two passwrd in pic
-	protected Date created; 
+	protected Date created; // should change the statement in sql
 	protected boolean isMember;
 	protected String firstName;
 	protected String lastName;
@@ -18,7 +18,7 @@ public class Users {
 	}
 	
 
-	/*contributor with all attributes, the date is auto-generated */
+	/*constructor with all attributes, the date is auto-generated */
 	public Users(String userName, String password, Date created, boolean isMember, String firstName, String lastName,
 			String email, String phone, CompetencyLevel competencyLevel) {
 		super();
@@ -33,10 +33,14 @@ public class Users {
 		this.competencyLevel = competencyLevel;
 	}
 	
+	/*constructor with username only*/
+	public Users(String userName) {
+		this.userName = userName;
+	}
+
+	
 
 	/* Getters and Setters */
-
-
 	public String getUserName() {
 		return userName;
 	}
