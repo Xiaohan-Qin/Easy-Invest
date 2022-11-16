@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,12 +48,12 @@ public class UsersDao {
 			insertStmt.setString(1, user.getUserName());
 			insertStmt.setString(2, user.getPassword());
 			insertStmt.setTimestamp(3, new Timestamp(user.getCreated().getTime()));
-			insertStmt.setBoolean(3, user.isMember());
-			insertStmt.setString(4, user.getFirstName());
-			insertStmt.setString(5, user.getLastName());
-			insertStmt.setString(6, user.getEmail());
-			insertStmt.setString(7, user.getPhone());
-			insertStmt.setString(8, user.getCompetencyLevel().name());
+			insertStmt.setBoolean(4, user.isMember());
+			insertStmt.setString(5, user.getFirstName());
+			insertStmt.setString(6, user.getLastName());
+			insertStmt.setString(7, user.getEmail());
+			insertStmt.setString(8, user.getPhone());
+			insertStmt.setString(9, user.getCompetencyLevel().name());
 
 			insertStmt.executeUpdate();
 			
