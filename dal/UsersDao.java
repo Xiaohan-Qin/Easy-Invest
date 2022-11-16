@@ -74,7 +74,7 @@ public class UsersDao {
 	/**
 	 * Update the password for user 
 	 */
-	public Users updateLastName(Users user, String newPassword) throws SQLException {
+	public Users updatePassword(Users user, String newPassword) throws SQLException {
 		String updateUser = "UPDATE Users SET Password=? WHERE UserName=?;";
 		Connection connection = null;
 		PreparedStatement updateStmt = null;
