@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/userdelete")
 public class UserDelete extends HttpServlet {
 	
-	protected MembershipUsersDao membershipUsersDao;
+	protected UsersDao usersDao;
 	
 	@Override
 	public void init() throws ServletException {
-		membershipUsersDao = MembershipUsersDao.getInstance();
+		usersDao = UsersDao.getInstance();
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class UserDelete extends HttpServlet {
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
         // Provide a title and render the JSP.
-        messages.put("title", "Delete BlogUser");        
+        messages.put("title", "Delete User");        
         req.getRequestDispatcher("/UserDelete.jsp").forward(req, resp);
 	}
 	
@@ -50,11 +50,11 @@ public class UserDelete extends HttpServlet {
             messages.put("disableSubmit", "true");
         } else {
         	// Delete the BlogUser.
-	        MembershipUsers membershipUser = new MembershipUsers(userName);
+	        Users user = new Users(userName);
 	        try {
-	        	membershipUser = membershipUsersDao.delete(membershipUser);
+	        	user = usersDao.delete(user);
 	        	// Update the message.
-		        if (membershipUser == null) {
+		        if (user == null) {
 		            messages.put("title", "Successfully deleted " + userName);
 		            messages.put("disableSubmit", "true");
 		        } else {
