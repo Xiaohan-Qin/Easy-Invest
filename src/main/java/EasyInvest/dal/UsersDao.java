@@ -30,7 +30,7 @@ public class UsersDao {
 	 */
 	public Users create(Users user) throws SQLException {
 		String insertUser = "INSERT INTO Users(UserName, Password,"
-				+ "Created, isMember,"
+				+ "Created, IsMember,"
 				+ "FirstName,LastName,"
 				+ "Email, Phone,"
 				+ "CompetencyLevel) "
@@ -66,7 +66,182 @@ public class UsersDao {
 			}
 		}
 	}
+	
+	
+	/**
+	 * Get users list from first name
+	 * @param firstName
+	 * @return
+	 * @throws SQLException
+	 */
+		public List<Users> getUsersFromFirstName(String firstName) throws SQLException {
+			List<Users> users = new ArrayList<Users>();
+			String selectUsers =
+					"SELECT UserName, Password, "
+							+"Created, IsMember, "
+							+"FirstName,LastName,"
+							+"Email, Phone,"
+							+"CompetencyLevel "
+							+"FROM Users WHERE FirstName=?;";
+			Connection connection = null;
+			PreparedStatement selectStmt = null;
+			ResultSet results = null;
+			try {
+				connection = connectionManager.getConnection();
+				selectStmt = connection.prepareStatement(selectUsers);
+				selectStmt.setString(1, firstName);
+				results = selectStmt.executeQuery();
+				while(results.next()) {
+					String userName = results.getString("UserName");
+					String password = results.getString("Password");
+					Date created = new Date(results.getTimestamp("Created").getTime());
+					boolean isMember = results.getBoolean("IsMember");
+					String resultFirstName = results.getString("FirstName");
+					String lastName = results.getString("LastName");
+					String email = results.getString("Email");
+					String phone = results.getString("Phone");
+					Users.CompetencyLevel competencyLevel = Users.CompetencyLevel.valueOf(results.getString("CompetencyLevel"));
+					
+					Users user = new Users(userName,password,created,isMember,resultFirstName,lastName,
+							email,phone,competencyLevel);
+					
+					
+					users.add(user);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				if(connection != null) {
+					connection.close();
+				}
+				if(selectStmt != null) {
+					selectStmt.close();
+				}
+				if(results != null) {
+					results.close();
+				}
+			}
+			return users;
+		}
 
+		/**
+		 * Get user from user name
+		 * @param userName
+		 * @return
+		 * @throws SQLException
+		 */
+		public Users getUserFromUserName(String userName) throws SQLException {
+			String selectUser = "SELECT UserName, Password, "
+					+"Created, IsMember,"
+					+"FirstName,LastName,"
+					+"Email, Phone,"
+					+"CompetencyLevel "
+					+"FROM Users WHERE UserName=?;";
+			Connection connection = null;
+			PreparedStatement selectStmt = null;
+			ResultSet results = null;
+			try {
+				connection = connectionManager.getConnection();
+				selectStmt = connection.prepareStatement(selectUser);
+				selectStmt.setString(1, userName);
+				results = selectStmt.executeQuery();
+
+				if(results.next()) {
+					String resultUserName = results.getString("UserName");
+					String password = results.getString("Password");
+					Date created = new Date(results.getTimestamp("Created").getTime());
+					boolean isMember = results.getBoolean("IsMember");
+					String firstName = results.getString("FirstName");
+					String lastName = results.getString("LastName");
+					String email = results.getString("Email");
+					String phone = results.getString("Phone");
+					Users.CompetencyLevel competencyLevel = Users.CompetencyLevel.valueOf(results.getString("CompetencyLevel"));
+					
+					Users user = new Users(resultUserName,password,created,isMember,firstName,lastName,
+							email,phone,competencyLevel);
+					return user;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				if(connection != null) {
+					connection.close();
+				}
+				if(selectStmt != null) {
+					selectStmt.close();
+				}
+				if(results != null) {
+					results.close();
+				}
+			}
+			return null;
+		}
+
+	
+		/**
+
+		* Update LastName for user
+
+		* @param user
+
+		* @param newLastName
+
+		* @return
+
+		* @throws SQLException
+
+		*/
+
+		    public Users updateLastName(Users user, String newLastName) throws SQLException {
+
+		        String updateUser = "UPDATE Users SET LastName=? WHERE UserName=?;";
+
+		        Connection connection = null;
+
+		        PreparedStatement updateStmt = null;
+
+		        try {
+
+		            connection = connectionManager.getConnection();
+
+		            updateStmt = connection.prepareStatement(updateUser);
+
+		            updateStmt.setString(1, newLastName);
+
+		            updateStmt.setString(2, user.getUserName());
+
+		            updateStmt.executeUpdate();
+
+		            user.setPassword(newLastName);
+
+		            return user;
+
+		        } catch (SQLException e) {
+
+		            e.printStackTrace();
+
+		            throw e;
+
+		        } finally {
+
+		            if(connection != null) {
+
+		                connection.close();
+
+		            }
+
+		            if(updateStmt != null) {
+
+		                updateStmt.close();
+
+		            }
+
+		        }
+
+		    }
+		
 	/**
 	 * Update the password for user 
 	 */
@@ -128,7 +303,7 @@ public class UsersDao {
 	
 	public Users getUserFromCompetencyLevel(Users.CompetencyLevel competency) throws SQLException {
 		String selectUser = "SELECT UserName,Password, "
-				+ "Created, isMember, "
+				+ "Created, IsMember, "
 				+ "FirstName,LastName, "
 				+ "Email, Phone,"
 				+ "CompetencyLevel  "
@@ -147,7 +322,7 @@ public class UsersDao {
 				String userName = results.getString("UserName");
 				String password = results.getString("Password");
 				Date created = new Date(results.getTimestamp("Created").getTime());
-				boolean isMember = results.getBoolean("isMember");
+				boolean isMember = results.getBoolean("IsMember");
 				String firstName = results.getString("FirstName");
 				String lastName = results.getString("LastName");
 				String email = results.getString("Email");
@@ -181,7 +356,7 @@ public class UsersDao {
 	public List<Users> getUsersFromCreateDate(Date created) throws SQLException {
 		List<Users> users = new ArrayList<Users>();
 		String selectUser = "SELECT UserName,Password, "
-				+ "Created, isMember, "
+				+ "Created, IsMember, "
 				+ "FirstName,LastName, "
 				+ "Email, Phone,"
 				+ "CompetencyLevel  "
@@ -204,7 +379,7 @@ public class UsersDao {
 				String userName = results.getString("UserName");
 				String password = results.getString("Password");
 				Date resultCreated = new Date(results.getTimestamp("Created").getTime());
-				boolean isMember = results.getBoolean("isMember");
+				boolean isMember = results.getBoolean("IsMember");
 				String firstName = results.getString("FirstName");
 				String lastName = results.getString("LastName");
 				String email = results.getString("Email");

@@ -117,7 +117,7 @@ public class MembershipUsersDao extends UsersDao{
 		// build the membership user object and use the User super class
 		String selectMembershipUser =
 				"SELECT MembershipUsers.UserName AS UserName, Password,"
-				+ "Created, isMember,FirstName, LastName,"
+				+ "Created, IsMember,FirstName, LastName,"
 				+ "Email, Phone, CompetencyLevel, Revenue "
 				+ "FROM MembershipUsers INNER JOIN Users "
 				+ "ON MembershipUsers.UserName = Users.UserName "
@@ -135,7 +135,7 @@ public class MembershipUsersDao extends UsersDao{
 				String password = results.getString("Password");
 				Date created = new Date(results.getTimestamp("Created").getTime());
 				
-				boolean isMember = results.getBoolean("isMember");
+				boolean isMember = results.getBoolean("IsMember");
 				String firstName = results.getString("FirstName");
 				String lastName = results.getString("LastName");
 				
@@ -177,7 +177,7 @@ public class MembershipUsersDao extends UsersDao{
 		List<MembershipUsers> membershipUsers = new ArrayList<MembershipUsers>();
 		String selectMembershipUsers =
 			"SELECT MembershipUsers.UserName AS UserName, Password,"
-			+ "Created, isMember,FirstName, LastName,"
+			+ "Created, IsMember,FirstName, LastName,"
 			+ "Email, Phone, CompetencyLevel, Revenue "
 			+"FROM MembershipUsers INNER JOIN Users " 
 			+"  ON MembershipUsers.UserName = Users.UserName " 
@@ -195,7 +195,7 @@ public class MembershipUsersDao extends UsersDao{
 				String password = results.getString("Password");
 				Date created = new Date(results.getTimestamp("Created").getTime());
 				
-				boolean isMember = results.getBoolean("isMember");
+				boolean isMember = results.getBoolean("IsMember");
 				String firstName = results.getString("FirstName");
 				String lastName = results.getString("LastName");
 				

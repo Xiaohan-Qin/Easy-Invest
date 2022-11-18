@@ -26,15 +26,24 @@ public class Inserter {
 		ReviewsDao reviewsDao = ReviewsDao.getInstance();
 		EducationalMaterialsDao educationalMaterialsDao = EducationalMaterialsDao.getInstance();
 		MembershipSubscriptionDao membershipSubscriptionDao = MembershipSubscriptionDao.getInstance();
-
-
-		
-		Date date = new Date();
+		StocksDao stocksDao = StocksDao.getInstance();
+		DailyStockRecommendationDao dailyDao = DailyStockRecommendationDao.getInstance();
+		// StockRecommendation instance
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		Date date1 = formatter.parse("2022-10-07 00:00:00");
+		Date date2 = formatter.parse("2012-01-10 00:00:00");
+		
+		DailyStockRecommendation recommendation1 = new DailyStockRecommendation(1, "TSLA", date1, PositionType.Long);
+		recommendation1 = dailyDao.create(recommendation1);
+		DailyStockRecommendation recommendation2 = new DailyStockRecommendation(2, "TSLA", date2, PositionType.Long);
+		recommendation2 = dailyDao.create(recommendation2);
+		DailyStockRecommendation recommendation3 = new DailyStockRecommendation(3, "AAPL", date2, PositionType.Short);
+		recommendation3 = dailyDao.create(recommendation3);
+
+		Date date = new Date();
 		
 		//some dates
-		Date date1 = formatter.parse("2020-01-01 00:00:00");
-		Date date2 = formatter.parse("2022-11-15 00:00:08");
 		Date date3 = formatter.parse("2020-01-02 00:00:00");
 		Date date4 = formatter.parse("2022-11-15 00:00:15");
 
@@ -217,25 +226,6 @@ public class Inserter {
 		
 	}
 		
-		
-		
-				
-//		StocksDao stocksDao = StocksDao.getInstance();
-//		DailyStockRecommendationDao dailyDao = DailyStockRecommendationDao.getInstance();
-		
-		// StockRecommendation instance
-//		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//
-//		Date date1 = formatter.parse("2022-10-07 00:00:00");
-//		Date date2 = formatter.parse("2012-01-10 00:00:00");
-//		
-//		DailyStockRecommendation recommendation1 = new DailyStockRecommendation(1, "TSLA", date1, PositionType.Long);
-//		recommendation1 = dailyDao.create(recommendation1);
-//		DailyStockRecommendation recommendation2 = new DailyStockRecommendation(2, "TSLA", date2, PositionType.Long);
-//		recommendation2 = dailyDao.create(recommendation2);
-//		DailyStockRecommendation recommendation3 = new DailyStockRecommendation(3, "AAPL", date2, PositionType.Short);
-//		recommendation3 = dailyDao.create(recommendation3);
-//		
 		// READ all distinct ticker name
 //		List<String> DistinctTickerNames = stocksDao.getDistinctTickerNames();
 //		for(String ticker : DistinctTickerNames) {
