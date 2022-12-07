@@ -8,11 +8,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Find a User</title>
+<title>Find a strategy post</title>
 </head>
 <body>
 	<form action="findstrategyposts" method="get">
-		<h1>Search for a user by first name</h1>
+		<h1>Search for strategy posts by user name</h1>
 		<p>
 			<label for="username">User name</label>
 			<input id="username" name="username" value="${fn:escapeXml(param.username)}">

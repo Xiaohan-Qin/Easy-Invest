@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Delete a User</title>
+<title>Delete a strategy post</title>
 </head>
 <body>
 	<h1>${messages.title}</h1>

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create a User</title>
+<title>Create a strategy post</title>
 </head>
 <body>
 	<h1>Create Strategy Post</h1>

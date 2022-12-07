@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/userdelete")
+@WebServlet("/strategypostdelete")
 public class StrategyPostDelete extends HttpServlet {
 	
 	protected StrategyPostDao strategyPostDao;
