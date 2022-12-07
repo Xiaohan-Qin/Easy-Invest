@@ -25,6 +25,7 @@
 	</form>
 	<br/>
 	<div id="userCreate"><a href="usercreate">Create User</a></div>
+	<div id="StrategyPostCreate"><a href="strategypostcreate">Create Strategy Post</a></div>
 	<br/>
 	
 	<h1>Matching User</h1>
