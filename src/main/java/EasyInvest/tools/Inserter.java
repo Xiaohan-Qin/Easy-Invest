@@ -48,13 +48,17 @@ public class Inserter {
 		Date date4 = formatter.parse("2022-11-15 00:00:15");
 
 		// Users instance
-		Users user1 = new Users("Clarissa","0000", date, true,"Clariss","Fritz","a@gmail.com","309-840-8213",Users.CompetencyLevel.ADVANCED);
-		Users user2 = new Users("Deborah","0000", date, false,"Deborah","Pittman","a@gmail.com","309-840-6832",Users.CompetencyLevel.BEGINNER);
-		Users user3 = new Users("Rebecca","0000", date, true,"Rebecca","Gonzales","a@gmail.com","217-646-0813",Users.CompetencyLevel.INTERMEDIATE);
+		Users user1 = new Users("user1","0000", date, true,"Clarissa","Fritz","a@gmail.com","309-840-8213",Users.CompetencyLevel.ADVANCED);
+		Users user2 = new Users("user2","0000", date, false,"Deborah","Pittman","a@gmail.com","309-840-6832",Users.CompetencyLevel.BEGINNER);
+		Users user3 = new Users("user3","0000", date, true,"Rebecca","Gonzales","a@gmail.com","217-646-0813",Users.CompetencyLevel.INTERMEDIATE);
+		Users user4 = new Users("user4","0000", date, false,"Deborah","Pittman","a@gmail.com","309-840-6832",Users.CompetencyLevel.BEGINNER);
+		Users user5 = new Users("user5","0000", date, true,"Rebecca","Gonzales","a@gmail.com","217-646-0813",Users.CompetencyLevel.INTERMEDIATE);
 		//create
 		user1 = usersDao.create(user1);
 		user2 = usersDao.create(user2);
 		user3 = usersDao.create(user3);
+		user4 = usersDao.create(user4);
+		user4 = usersDao.create(user5);
 		//update password
 		user1 = usersDao.updatePassword(user1, "1111");
 		//delete user
@@ -68,16 +72,16 @@ public class Inserter {
 		
 
 		// Admin instance
-		Admin admin1 = new Admin("AnnaZ", "11111", date, true, "Anna", "Zhang", "annaz@easyinvest.com", "206-006-7796", CompetencyLevel.EXPERT, date);
+		Admin admin1 = new Admin("admin1", "11111", date, true, "Anna", "Zhang", "annaz@easyinvest.com", "206-006-7796", CompetencyLevel.EXPERT, date);
 		admin1 = adminDao.create(admin1);
-		Admin admin2 = new Admin("JuliaH", "22222", date, true, "Julia", "Huang", "juliah@easyinvest.com", "206-376-5515", CompetencyLevel.ADVANCED, date);
+		Admin admin2 = new Admin("admin2", "22222", date, true, "Julia", "Huang", "juliah@easyinvest.com", "206-376-5515", CompetencyLevel.ADVANCED, date);
 		admin2 = adminDao.create(admin2);
 		
 		// membership users instance		
-		MembershipUsers membershipUser1 = new MembershipUsers("Clarissi","0000", date, true,"Clarissa","Fritz",
+		MembershipUsers membershipUser1 = new MembershipUsers("member1","0000", date, true,"Clarissa","Fritz",
 				"a@gmail.com","309-840-8213",Users.CompetencyLevel.ADVANCED,123.12);
 		membershipUser1 = membershipUsersDao.create(membershipUser1);
-		MembershipUsers membershipUser2 = new MembershipUsers("Rebecci","0000", date, true,"Rebecca","Gonzales",
+		MembershipUsers membershipUser2 = new MembershipUsers("member2","0000", date, true,"Rebecca","Gonzales",
 				"a@gmail.com","217-646-0813",Users.CompetencyLevel.INTERMEDIATE,200.08);
 		membershipUser2 = membershipUsersDao.create(membershipUser2);
 		//update password
@@ -98,8 +102,8 @@ public class Inserter {
 					u1.getCompetencyLevel().name());
 		}
 		// get 
-		MembershipUsers mu1 = membershipUsersDao.getMembershipUserFromUserName("Clarissi");
-		List<MembershipUsers> muList1 = membershipUsersDao.getMembershipUsersFromUserName("Clarissi");
+		MembershipUsers mu1 = membershipUsersDao.getMembershipUserFromUserName("member1");
+		List<MembershipUsers> muList1 = membershipUsersDao.getMembershipUsersFromUserName("member1");
 		System.out.format("Reading membership user: %s,%s,%s,%s,%s,%s,%s,%s,%s",
 				mu1.getUserName(),mu1.getCreated(),mu1.isMember(),
 				mu1.getFirstName(), mu1.getLastName(), mu1.getEmail(),mu1.getPhone(),
@@ -115,7 +119,7 @@ public class Inserter {
 		// membership sub
 		MembershipSubscription memberSub = new MembershipSubscription(membershipUser1, 4.99, date);
 		memberSub = membershipSubscriptionDao.create(memberSub);
-		List <MembershipSubscription> m1 = membershipSubscriptionDao.getMembershipSubscriptionByUserName("Clarissi");
+		List <MembershipSubscription> m1 = membershipSubscriptionDao.getMembershipSubscriptionByUserName("member1");
 		for(MembershipSubscription m : m1) {
 		       System.out.format("Reading MembershipSubscription: %s %s %s %s \n",
 	           m.getTransactionId(), m.getUser().getUserName(), m.getSubscriptionPrice(), m.getStartDate());
@@ -124,7 +128,7 @@ public class Inserter {
 		membershipSubscriptionDao.updateSubscriptionPrice(memberSub, 8.99);
 
 		// strategy post instances
-		StrategyPost strategyPost = new StrategyPost("Save", "Content", date, "Clarissi", true, 3);
+		StrategyPost strategyPost = new StrategyPost("Save", "Content", date, "member1", true, 3);
 		strategyPost = strategyPostDao.create(strategyPost);
 		StrategyPost post1 = strategyPostDao.getStrategyPostById(strategyPost.getPostId());
 	    System.out.format("Reading StrategyPost: %s %s %s %s %s %s \n",
@@ -147,7 +151,7 @@ public class Inserter {
 			System.out.format("Looping StrategyPost: %s %s %s %s %s %s \n",
 				a.getPostId(), a.getTitle(), a.getContent(), a.getCreated(), a.getUserName(), a.isPublished());
 		}
-		List<StrategyPost> postsByUser = strategyPostDao.getStrategyPostsByUserName("Clarissi");
+		List<StrategyPost> postsByUser = strategyPostDao.getStrategyPostsByUserName("member1");
 		for(StrategyPost a : postsByUser) {
 			System.out.format("Looping StrategyPost: %s %s %s %s %s %s \n",
 				a.getPostId(), a.getTitle(), a.getContent(), a.getCreated(), a.getUserName(), a.isPublished());
@@ -156,32 +160,32 @@ public class Inserter {
 //		strategyPostDao.delete(strategyPost);
 		
 		// credit cards instance
-		long[] creditCardId = {
-				4567456745674567L, 6789678967896789L, 5567456745674567L, 7789678967896789L,
-				4567456745674577L, 6789678967896799L, 5567456745674767L, 7789678967896889L,
-				4567456745678567L, 6789678967898789L, 5567456745678567L, 7789678967898789L	};
-		String[] userName = {"Clarissa", "Clarissa", "Clarissa", "Deborah", "Deborah", "Deborah", "Deborah", 
-		"Rebecca", "Rebecca", "Rebecca", "Rebecca", "Rebecca"};
-		String[] creditCardExpriation_str = {
-				"2024-01-01 00:00:00", "2024-12-01 00:00:00", "2025-10-01 00:00:00",		
-				"2024-03-01 00:00:00", "2025-12-01 00:00:00", "2026-10-01 00:00:00",	
-				"2024-06-01 00:00:00", "2026-12-01 00:00:00", "2027-10-01 00:00:00",	
-				"2024-09-01 00:00:00", "2027-12-01 00:00:00", "2028-10-01 00:00:00" };
-
-		int len = creditCardId.length;
-		CreditCards[] creditCards = new CreditCards[len];
-		Date[] creditCardExpriation = new Date[len];
-
-		for (int i = 0; i < len; i++) {
-			creditCardExpriation[i] = formatter.parse(creditCardExpriation_str[i]);
+//		long[] creditCardId = {
+//				4567456745674567L, 6789678967896789L, 5567456745674567L, 7789678967896789L,
+//				4567456745674577L, 6789678967896799L, 5567456745674767L, 7789678967896889L,
+//				4567456745678567L, 6789678967898789L, 5567456745678567L, 7789678967898789L	};
+//		String[] userName = {"Clarissa", "Clarissa", "Clarissa", "Deborah", "Deborah", "Deborah", "Deborah", 
+//		"Rebecca", "Rebecca", "Rebecca", "Rebecca", "Rebecca"};
+//		String[] creditCardExpriation_str = {
+//				"2024-01-01 00:00:00", "2024-12-01 00:00:00", "2025-10-01 00:00:00",		
+//				"2024-03-01 00:00:00", "2025-12-01 00:00:00", "2026-10-01 00:00:00",	
+//				"2024-06-01 00:00:00", "2026-12-01 00:00:00", "2027-10-01 00:00:00",	
+//				"2024-09-01 00:00:00", "2027-12-01 00:00:00", "2028-10-01 00:00:00" };
+//
+//		int len = creditCardId.length;
+//		CreditCards[] creditCards = new CreditCards[len];
+//		Date[] creditCardExpriation = new Date[len];
+//
+//		for (int i = 0; i < len; i++) {
+//			creditCardExpriation[i] = formatter.parse(creditCardExpriation_str[i]);
 			// creditCards[i] = CreditCards(creditCardId[i], userName[i], creditCardExpriation[i]);
 			// creditCards[i] = CreditCardsDao.create(creditCards[i]);
-		}
-		CreditCards creditCard0 = new CreditCards(creditCardId[0], membershipUser1, creditCardExpriation[0]);
-		creditCard0 = creditCardsDao.create(creditCard0);
-
-		CreditCards creditCard1 = new CreditCards(creditCardId[1], membershipUser2, creditCardExpriation[1]);
-		creditCard1 = creditCardsDao.create(creditCard1);
+//		}
+//		CreditCards creditCard0 = new CreditCards(creditCardId[0], membershipUser1, creditCardExpriation[0]);
+//		creditCard0 = creditCardsDao.create(creditCard0);
+//
+//		CreditCards creditCard1 = new CreditCards(creditCardId[1], membershipUser2, creditCardExpriation[1]);
+//		creditCard1 = creditCardsDao.create(creditCard1);
 //
 //		CreditCards crediCard2 = new CreditCards(creditCardId[8], membershipUser3, creditCardExpriation[8]);
 //		creditCard2 = creditCardsDao.create(creditCard2);
@@ -206,7 +210,7 @@ public class Inserter {
 			}
 
 		reviewsDao.updateReview(review2, "new review");
-		List<Reviews> reviews = reviewsDao.getReviewsByUserName("Clarissa");
+		List<Reviews> reviews = reviewsDao.getReviewsByUserName("member1");
 		for (Reviews re:reviews){
 			 System.out.format("Looping reviews: %s %s %s %s \n",
 			     re.getReviewId(), re.getReview(), re.getUser(), re.getStrategyPost());
@@ -215,7 +219,7 @@ public class Inserter {
 		reviews = reviewsDao.getReviewsByPostId(1);
 		review2 = reviewsDao.delete(review2);
 		EducationalMaterials educationalMaterial1 = educationalMaterialsDao.create(educationalMaterial);
-		List<EducationalMaterials> educationalMaterials = educationalMaterialsDao.getEducationalMaterialsByUserName("AnnaZ"); 
+		List<EducationalMaterials> educationalMaterials = educationalMaterialsDao.getEducationalMaterialsByUserName("admin1"); 
 		for (EducationalMaterials ed:educationalMaterials){
 			 System.out.format("Looping reviews: %s %s %s %s %s %s \n",
 			     ed.getMaterialId(), ed.getTitle(), ed.getContent(), ed.getCreated(), ed.isPublished(), ed.getUser());

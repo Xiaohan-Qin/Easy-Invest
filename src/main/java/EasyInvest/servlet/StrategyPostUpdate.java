@@ -22,7 +22,7 @@ public class StrategyPostUpdate extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		strategyPostDao = strategyPostDao.getInstance();
+		strategyPostDao = StrategyPostDao.getInstance();
 	}
 	
 	@Override
@@ -61,17 +61,13 @@ public class StrategyPostUpdate extends HttpServlet {
         } else {
         	try {
         		StrategyPost strategyPost = strategyPostDao.getStrategyPostById(Integer.parseInt(postId));
-        		if(postId == null) {
-        			messages.put("success", "UserName does not exist. No update to perform.");
-        		} else {
-        			String newContent = req.getParameter("content");
-        			if (newContent == null || newContent.trim().isEmpty()) {
-        	            messages.put("success", "Please enter a valid content.");
-        	        } else {
-        	        	strategyPost = strategyPostDao.updateContent(strategyPost, newContent);
-        	        	messages.put("success", "Successfully updated " + postId);
-        	        }
-        		}
+        		String newContent = req.getParameter("content");
+				if (newContent == null || newContent.trim().isEmpty()) {
+				    messages.put("success", "Please enter a valid content.");
+				} else {
+					strategyPost = strategyPostDao.updateContent(strategyPost, newContent);
+					messages.put("success", "Content successfully updated " + postId);
+				}
         		req.setAttribute("strategyPost", strategyPost);
         	} catch (SQLException e) {
 				e.printStackTrace();

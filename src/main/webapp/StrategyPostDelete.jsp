@@ -13,7 +13,7 @@
 </head>
 <body>
 	<h1>${messages.title}</h1>
-	<form action="strategypostdelete" method="delete">
+	<form action="strategypostdelete" method="post">
 		<p>
 			<div <c:if test="${messages.disableSubmit}">style="display:none"</c:if>>
 				<label for="postId">Post ID</label>

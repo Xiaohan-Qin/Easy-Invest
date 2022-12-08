@@ -39,14 +39,14 @@ public class FindStrategyPosts extends HttpServlet {
         List<StrategyPost> strategyPosts = new ArrayList<StrategyPost>();
         
 
-        String userName = req.getParameter("userName");
+        String userName = req.getParameter("username");
         if (userName == null || userName.trim().isEmpty()) {
-            messages.put("success", "Please enter a valid firstname.");
+            messages.put("success", "Please enter a valid user name.");
         } else {
         	try {
         		//get post from strategyPostDao by user name
         		strategyPosts = strategyPostDao.getStrategyPostsByUserName(userName);
-        		if (!strategyPosts.contains(userName)) {
+        		if (strategyPosts.size() == 0) {
     				messages.put("success", "Strategy post with this username is not found.");
     			} else {
             	messages.put("success", "Displaying results for strategy posts with username: " + userName);
@@ -55,7 +55,6 @@ public class FindStrategyPosts extends HttpServlet {
     			e.printStackTrace();
     			throw new IOException(e);
             }
-        	messages.put("previousFirstName", userName);
         }
         req.setAttribute("strategyPosts", strategyPosts);
         

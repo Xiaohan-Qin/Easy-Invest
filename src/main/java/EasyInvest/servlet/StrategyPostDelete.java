@@ -53,14 +53,18 @@ public class StrategyPostDelete extends HttpServlet {
 	        StrategyPost strategyPost = new StrategyPost(Integer.parseInt(postId));
 	        try {
 	        	strategyPost = strategyPostDao.delete(strategyPost);
-	        	messages.put("title", "Failed to delete " + postId);
+	        	if (strategyPost == null) {
+	        		messages.put("title", "Successfully deleted post with post ID: " + postId);
+		            messages.put("disableSubmit", "true");
+	        	} else {
+	        	messages.put("title", "Failed to delete post with post ID: " + postId);
 				messages.put("disableSubmit", "false");
+	        	}
 	        } catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);
 	        }
         }
-        
         req.getRequestDispatcher("/StrategyPostDelete.jsp").forward(req, resp);
     }
 }

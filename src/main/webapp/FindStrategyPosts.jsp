@@ -34,16 +34,17 @@
                 <th>IsPublished</th>
                 <th>Title</th>
                 <th>Content</th>
+                <th>Likes</th>
                 <th>Delete Strategy Post</th>
                 <th>Update Strategy Post</th>
             </tr>
-            <c:forEach items="${strategyposts}" var="strategypost" >
+            <c:forEach items="${strategyPosts}" var="strategypost" >
                 <tr>
                     <td><c:out value="${strategypost.getUserName()}" /></td>
                     <td><fmt:formatDate value="${strategypost.getCreated()}" pattern="yyyy-MM-dd" /></td>
+                    <td><c:out value="${strategypost.isPublished()}" /></td>
                     <td><c:out value="${strategypost.getTitle()}" /></td>
                     <td><c:out value="${strategypost.getContent()}" /></td>
-                    <td><c:out value="${strategypost.isPublished()}" /></td>
                     <td><c:out value="${strategypost.getLikes()}" /></td>
                     <td><a href="strategypostdelete?postId=<c:out value="${strategypost.getPostId()}"/>">Delete</a></td>
                     <td><a href="strategypostupdate?postId=<c:out value="${strategypost.getPostId()}"/>">Update</a></td>

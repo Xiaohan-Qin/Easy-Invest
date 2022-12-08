@@ -12,7 +12,7 @@
 </head>
 <body>
         <h1>Update strategy post</h1>
-        <form action="strategypostupdate" method="put">
+        <form action="strategypostupdate" method="post">
                 <p>
                         <label for="postId">Post ID</label>
                         <input id="postId" name="postId" value="${fn:escapeXml(param.postId)}">
