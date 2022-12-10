@@ -9,19 +9,38 @@ public class EducationalMaterials {
   protected String content;
   protected Date created;
   protected boolean published;
-  protected Admin user;
+//  protected Admin user; // update to string -- Yuhan Dec 07
+  protected String UserName;
 
-  public EducationalMaterials(int materialId, String title, String content, Date created,
-      boolean published, Admin user) {
-    this.materialId = materialId;
-    this.title = title;
-    this.content = content;
-    this.created = created;
-    this.published = published;
-    this.user = user;
-  }
 
-  public int getMaterialId() {
+  public EducationalMaterials(String title, String content, Date created, boolean published, String userName) {
+	super();
+	this.title = title;
+	this.content = content;
+	this.created = created;
+	this.published = published;
+	UserName = userName;
+}
+
+public EducationalMaterials(int materialId, String title, String content, Date created, boolean published,
+		String userName) {
+	super();
+	this.materialId = materialId;
+	this.title = title;
+	this.content = content;
+	this.created = created;
+	this.published = published;
+	UserName = userName;
+}
+
+public EducationalMaterials(int materialId) {
+	super();
+	this.materialId = materialId;
+}
+
+
+
+public int getMaterialId() {
     return materialId;
   }
 
@@ -61,11 +80,11 @@ public class EducationalMaterials {
     this.published = published;
   }
 
-  public Admin getUser() {
-    return user;
+  public String getUserName() {
+    return UserName;
   }
 
-  public void setUser(Admin user) {
-    this.user = user;
+  public void setUserName(String userName) {
+    UserName = userName;
   }
 }

@@ -26,20 +26,12 @@ public class Inserter {
 		ReviewsDao reviewsDao = ReviewsDao.getInstance();
 		EducationalMaterialsDao educationalMaterialsDao = EducationalMaterialsDao.getInstance();
 		MembershipSubscriptionDao membershipSubscriptionDao = MembershipSubscriptionDao.getInstance();
-		StocksDao stocksDao = StocksDao.getInstance();
-		DailyStockRecommendationDao dailyDao = DailyStockRecommendationDao.getInstance();
 		// StockRecommendation instance
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		Date date1 = formatter.parse("2022-10-07 00:00:00");
 		Date date2 = formatter.parse("2012-01-10 00:00:00");
 		
-		DailyStockRecommendation recommendation1 = new DailyStockRecommendation(1, "TSLA", date1, PositionType.Long);
-		recommendation1 = dailyDao.create(recommendation1);
-		DailyStockRecommendation recommendation2 = new DailyStockRecommendation(2, "TSLA", date2, PositionType.Long);
-		recommendation2 = dailyDao.create(recommendation2);
-		DailyStockRecommendation recommendation3 = new DailyStockRecommendation(3, "AAPL", date2, PositionType.Short);
-		recommendation3 = dailyDao.create(recommendation3);
 
 		Date date = new Date();
 		
@@ -53,12 +45,16 @@ public class Inserter {
 		Users user3 = new Users("user3","0000", date, true,"Rebecca","Gonzales","a@gmail.com","217-646-0813",Users.CompetencyLevel.INTERMEDIATE);
 		Users user4 = new Users("user4","0000", date, false,"Deborah","Pittman","a@gmail.com","309-840-6832",Users.CompetencyLevel.BEGINNER);
 		Users user5 = new Users("user5","0000", date, true,"Rebecca","Gonzales","a@gmail.com","217-646-0813",Users.CompetencyLevel.INTERMEDIATE);
+		Users user7 = new Users("INTERMEDIATE","0000", date, true,"Jill","Wang","a@gmail.com","217-646-0813",Users.CompetencyLevel.BEGINNER);
+		
 		//create
 		user1 = usersDao.create(user1);
 		user2 = usersDao.create(user2);
 		user3 = usersDao.create(user3);
 		user4 = usersDao.create(user4);
-		user4 = usersDao.create(user5);
+		user5 = usersDao.create(user5);
+		user7 = usersDao.create(user7);
+		
 		//update password
 		user1 = usersDao.updatePassword(user1, "1111");
 		//delete user
@@ -71,11 +67,14 @@ public class Inserter {
 		List<Users> d1 = usersDao.getUsersFromCreateDate(date);
 		
 
-		// Admin instance
+		// Administer instance
 		Admin admin1 = new Admin("admin1", "11111", date, true, "Anna", "Zhang", "annaz@easyinvest.com", "206-006-7796", CompetencyLevel.EXPERT, date);
 		admin1 = adminDao.create(admin1);
 		Admin admin2 = new Admin("admin2", "22222", date, true, "Julia", "Huang", "juliah@easyinvest.com", "206-376-5515", CompetencyLevel.ADVANCED, date);
 		admin2 = adminDao.create(admin2);
+		Admin admin3 = new Admin("BEGINNER", "22222", date, true, "Sherry", "Huang", "juliah@easyinvest.com", "206-376-5515", CompetencyLevel.ADVANCED, date);
+		admin3 = adminDao.create(admin3);
+		
 		
 		// membership users instance		
 		MembershipUsers membershipUser1 = new MembershipUsers("member1","0000", date, true,"Clarissa","Fritz",
@@ -117,20 +116,28 @@ public class Inserter {
 		}
 
 		// membership sub
-		MembershipSubscription memberSub = new MembershipSubscription(membershipUser1, 4.99, date);
-		memberSub = membershipSubscriptionDao.create(memberSub);
-		List <MembershipSubscription> m1 = membershipSubscriptionDao.getMembershipSubscriptionByUserName("member1");
-		for(MembershipSubscription m : m1) {
-		       System.out.format("Reading MembershipSubscription: %s %s %s %s \n",
-	           m.getTransactionId(), m.getUser().getUserName(), m.getSubscriptionPrice(), m.getStartDate());
-	}
-
-		membershipSubscriptionDao.updateSubscriptionPrice(memberSub, 8.99);
+//		MembershipSubscription memberSub = new MembershipSubscription(membershipUser1, 4.99, date);
+//		memberSub = membershipSubscriptionDao.create(memberSub);
+//		List <MembershipSubscription> m1 = membershipSubscriptionDao.getMembershipSubscriptionByUserName("member1");
+//		for(MembershipSubscription m : m1) {
+//		       System.out.format("Reading MembershipSubscription: %s %s %s %s \n",
+//	           m.getTransactionId(), m.getUser().getUserName(), m.getSubscriptionPrice(), m.getStartDate());
+//	}
+//
+//		membershipSubscriptionDao.updateSubscriptionPrice(memberSub, 8.99);
 
 		// strategy post instances
-		StrategyPost strategyPost = new StrategyPost("Save", "Content", date, "member1", true, 3);
-		strategyPost = strategyPostDao.create(strategyPost);
-		StrategyPost post1 = strategyPostDao.getStrategyPostById(strategyPost.getPostId());
+		StrategyPost strategyPost1 = new StrategyPost("Increase Market Awaresness", "Pay attention to CPI", date, "member1", true, 17);
+		strategyPost1 = strategyPostDao.create(strategyPost1);
+		
+		StrategyPost strategyPost2 = new StrategyPost("Set Smart Goals", "TRack meaningful metrics such as company revenue", date, "member1", true, 25);
+		strategyPost2 = strategyPostDao.create(strategyPost2);
+		
+		StrategyPost strategyPost3 = new StrategyPost("Balance is everything", "Balance your investment industries and risks", date, "member2", true, 56);
+		strategyPost3 = strategyPostDao.create(strategyPost3);
+		
+		
+		StrategyPost post1 = strategyPostDao.getStrategyPostById(strategyPost1.getPostId());
 	    System.out.format("Reading StrategyPost: %s %s %s %s %s %s \n",
 	    post1.getPostId(), post1.getTitle(), post1.getContent(), post1.getCreated(), post1.getUserName(), post1.isPublished());
 
@@ -140,7 +147,6 @@ public class Inserter {
 				p.getPostId(), p.getTitle(), p.getContent(), p.getCreated(), p.getUserName(), p.isPublished());
 		}
 		
-
 		List<StrategyPost> postsByCompLevel = strategyPostDao.getStrategyPostsByCompetencyLevel(Users.CompetencyLevel.ADVANCED);
 		for(StrategyPost a : postsByCompLevel) {
 			System.out.format("Looping StrategyPost: %s %s %s %s %s %s \n",
@@ -156,7 +162,9 @@ public class Inserter {
 			System.out.format("Looping StrategyPost: %s %s %s %s %s %s \n",
 				a.getPostId(), a.getTitle(), a.getContent(), a.getCreated(), a.getUserName(), a.isPublished());
 		}
-		strategyPostDao.updateContent(strategyPost, "Amazing!");
+		
+//		strategyPostDao.updateContent(strategyPost1, "Amazing!");
+		
 //		strategyPostDao.delete(strategyPost);
 		
 		// credit cards instance
@@ -200,7 +208,19 @@ public class Inserter {
 		
 		// review and educational materials instance
 		Reviews review = new Reviews(1, "first review", membershipUser1, post1);
-		EducationalMaterials educationalMaterial = new EducationalMaterials(1, "titile1", "first edu content", date, true, admin1);
+		// Material Instance
+//		EducationalMaterials m1 = new EducationalMaterials("4 Easy Steps to Get Started with Investing Stocks","This is the content for easy level investing tutorials",date,true,"Beginner");
+//		EducationalMaterials m2 = new EducationalMaterials("Intermediate Investing Techniques","This is the content for intermeidate level investing tutorials",date,true,"Intermediate");
+//		EducationalMaterials m3 = new EducationalMaterials("Learn the Lingo – Basic Ratios","This is the content for advanced level investing tutorials",date,true,"Advanced");
+//		EducationalMaterials m4 = new EducationalMaterials("Know your risk tolerance","This is the content for expert level investing tutorials",date,true,"Expert");
+	
+		//Create
+//		m1 = educationalMaterialsDao.create(m1);
+//		m2 = educationalMaterialsDao.create(m2);
+//		m3 = educationalMaterialsDao.create(m3);
+//		m4 = educationalMaterialsDao.create(m4);
+		
+//		EducationalMaterials educationalMaterial = new EducationalMaterials(1, "titile1", "first edu content", date, true, admin1);
 		Reviews review1 = reviewsDao.create(review);
 		Reviews review2 = reviewsDao.getReviewById(1);
 		List<Reviews> reviewsList = reviewsDao.getReviewsByPostId(1);
@@ -218,55 +238,61 @@ public class Inserter {
 
 		reviews = reviewsDao.getReviewsByPostId(1);
 		review2 = reviewsDao.delete(review2);
-		EducationalMaterials educationalMaterial1 = educationalMaterialsDao.create(educationalMaterial);
-		List<EducationalMaterials> educationalMaterials = educationalMaterialsDao.getEducationalMaterialsByUserName("admin1"); 
-		for (EducationalMaterials ed:educationalMaterials){
-			 System.out.format("Looping reviews: %s %s %s %s %s %s \n",
-			     ed.getMaterialId(), ed.getTitle(), ed.getContent(), ed.getCreated(), ed.isPublished(), ed.getUser());
-			}
-
-		educationalMaterialsDao.updateContent(educationalMaterial1, "new edu content");
-		EducationalMaterials educationalMaterial4 = educationalMaterialsDao.delete(educationalMaterial1);
+//		EducationalMaterials educationalMaterial1 = educationalMaterialsDao.create(educationalMaterial);
+//		List<EducationalMaterials> educationalMaterials = educationalMaterialsDao.getEducationalMaterialsByUserName("admin1"); 
+//		for (EducationalMaterials ed:educationalMaterials){
+//			 System.out.format("Looping reviews: %s %s %s %s %s %s \n",
+//			     ed.getMaterialId(), ed.getTitle(), ed.getContent(), ed.getCreated(), ed.isPublished(), ed.getUser());
+//			}
+//
+//		educationalMaterialsDao.updateContent(educationalMaterial1, "new edu content");
+//		EducationalMaterials educationalMaterial4 = educationalMaterialsDao.delete(educationalMaterial1);
 		
-	}
+		StocksDao stocksDao = StocksDao.getInstance();
+		DailyStockRecommendationDao dailyDao = DailyStockRecommendationDao.getInstance();
+		
+		DailyStockRecommendation recommendation1 = new DailyStockRecommendation(1, "TSLA", date1, PositionType.Long);
+		recommendation1 = dailyDao.create(recommendation1);
+		DailyStockRecommendation recommendation2 = new DailyStockRecommendation(2, "TSLA", date2, PositionType.Long);
+		recommendation2 = dailyDao.create(recommendation2);
+		DailyStockRecommendation recommendation3 = new DailyStockRecommendation(3, "AAPL", date2, PositionType.Short);
+		recommendation3 = dailyDao.create(recommendation3);
 		
 		// READ all distinct ticker name
-//		List<String> DistinctTickerNames = stocksDao.getDistinctTickerNames();
-//		for(String ticker : DistinctTickerNames) {
-//					System.out.format("Looping ticker names: %s\n", ticker);
-//		}
-//		
+		List<String> DistinctTickerNames = stocksDao.getDistinctTickerNames();
+		for(String ticker : DistinctTickerNames) {
+					System.out.format("Looping ticker names: %s\n", ticker);
+		}
+		
 		// Read the begin and end row of given ticker
-//		List<Stocks> startAndEnd = stocksDao.getStartAndEndForTicker("TSLA");
-//		for(Stocks stock : startAndEnd) {
-//			System.out.format(
-//					"Looping stocks: DATE:%s OPEN:%s HIGH:%s LOW:%s CLOSE:%s ADJ_CLOSE:%s VOLUME:%s CAP_RANK:%s TICKER_NAME:%s \n", 
-//					stock.getDate(), stock.getOpen(), stock.getHigh(), stock.getLow(), stock.getClose(), stock.getAdjClose(), stock.getVolume(), stock.getStockCapRank(), stock.getTickerName());
-//		}
+		List<Stocks> startAndEnd = stocksDao.getStartAndEndForTicker("TSLA");
+		for(Stocks stock : startAndEnd) {
+			System.out.format(
+					"Looping stocks: DATE:%s OPEN:%s HIGH:%s LOW:%s CLOSE:%s ADJ_CLOSE:%s VOLUME:%s CAP_RANK:%s TICKER_NAME:%s \n", 
+					stock.getDate(), stock.getOpen(), stock.getHigh(), stock.getLow(), stock.getClose(), stock.getAdjClose(), stock.getVolume(), stock.getStockCapRank(), stock.getTickerName());
+		}
 		
 		// Get the return percent based on given ticker
-//		Double returnPercent = stocksDao.getReturnPercentForTicker("TSLA");
-//		System.out.format("The return percent based on given ticker: %s", returnPercent);
-//		
+		Double returnPercent = stocksDao.getReturnPercentForTicker("TSLA");
+		System.out.format("The return percent based on given ticker: %s", returnPercent);
+		
 		
 		// Read the recommendations based on the ticker name
-//		List<DailyStockRecommendation> recommendations = dailyDao.getRecommendationByTicker("TSLA");
-//		for(DailyStockRecommendation recom: recommendations) {
-//			System.out.format(
-//					"Looping recommendations: %s %s %s %s \n",
-//					recom.getDailyStockRecommendationID(), recom.getTickerName(), recom.getDate(), recom.getPosition()
-//				);
-//		}
+		List<DailyStockRecommendation> recommendations = dailyDao.getRecommendationByTicker("TSLA");
+		for(DailyStockRecommendation recom: recommendations) {
+			System.out.format(
+					"Looping recommendations: %s %s %s %s \n",
+					recom.getDailyStockRecommendationID(), recom.getTickerName(), recom.getDate(), recom.getPosition()
+				);
+		}
 		
-//		 Read the recommendations based on the date
-//		List<DailyStockRecommendation> recommendations1 = dailyDao.getRecommendationByDate(date2);
-//		for(DailyStockRecommendation recom: recommendations1) {
-//			System.out.format(
-//					"Looping recommendations: %s %s %s %s \n",
-//					recom.getDailyStockRecommendationID(), recom.getTickerName(), recom.getDate(), recom.getPosition()
-//				);
-//		}
-//		
-//		
-//	}
+		// Read the recommendations based on the date
+		List<DailyStockRecommendation> recommendations1 = dailyDao.getRecommendationByDate(date2);
+		for(DailyStockRecommendation recom: recommendations1) {
+			System.out.format(
+					"Looping recommendations: %s %s %s %s \n",
+					recom.getDailyStockRecommendationID(), recom.getTickerName(), recom.getDate(), recom.getPosition()
+				);
+		}
+	}
 }

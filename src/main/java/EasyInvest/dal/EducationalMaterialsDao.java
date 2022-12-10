@@ -26,11 +26,14 @@ public class EducationalMaterialsDao {
   }
 
 
+  // GetMaterialByID -- updated by yuhan Dec06 -- do we need this? 
+
+
   // create
   public EducationalMaterials create(EducationalMaterials educationalMaterial) throws SQLException {
     String insertEducationalMaterial =
         "INSERT INTO EducationalMaterials(Title,Content,Created,Published,UserName) " +
-            "VALUES(?,?,?,?,?);";
+        "VALUES(?,?,?,?,?);";
     Connection connection = null;
     PreparedStatement insertStmt = null;
     ResultSet resultKey = null;
@@ -42,7 +45,8 @@ public class EducationalMaterialsDao {
       insertStmt.setString(2, educationalMaterial.getContent());
       insertStmt.setTimestamp(3, new Timestamp(educationalMaterial.getCreated().getTime()));
       insertStmt.setBoolean(4, educationalMaterial.isPublished());
-      insertStmt.setString(5, educationalMaterial.getUser().getUserName());
+//      insertStmt.setString(5, educationalMaterial.getUser().getUserName()); -- Yuhan Dec07
+      insertStmt.setString(5, educationalMaterial.getUserName());
       insertStmt.executeUpdate();
       resultKey = insertStmt.getGeneratedKeys();
       int materialId = -1;
@@ -128,12 +132,13 @@ public class EducationalMaterialsDao {
 
 
   // getEducationalMaterialsByUserName
+  // The username of the admin is set as Beginner, Intermediate, Advanced, Expert -- updated by Yuhan Dec 06
   public List<EducationalMaterials> getEducationalMaterialsByUserName (String userName) throws SQLException {
     List<EducationalMaterials> educationalMaterials = new ArrayList<>();
     String selectEducationalMaterial =
         "SELECT MaterialId, Title, EducationalMaterials.Content, EducationalMaterials.Created, Published, EducationalMaterials.UserName " +
-            "FROM EducationalMaterials INNER JOIN Users ON EducationalMaterials.UserName=Users.UserName " +
-            "WHERE EducationalMaterials.UserName=?;";
+        "FROM EducationalMaterials INNER JOIN Users ON EducationalMaterials.UserName=Users.UserName " +
+        "WHERE EducationalMaterials.UserName=?;";
     Connection connection = null;
     PreparedStatement selectStmt = null;
     ResultSet results = null;
@@ -143,7 +148,7 @@ public class EducationalMaterialsDao {
       selectStmt = connection.prepareStatement(selectEducationalMaterial);
       selectStmt.setString(1, userName);
       results = selectStmt.executeQuery();
-      AdminDao adminDao = AdminDao.getInstance();
+//      AdminDao adminDao = AdminDao.getInstance(); -- Yuhan Dec07
 
       while(results.next()) {
         int materialId = results.getInt("MaterialId");
@@ -151,8 +156,10 @@ public class EducationalMaterialsDao {
         String content = results.getString("Content");
         Date created =  new Date(results.getTimestamp("Created").getTime());
         Boolean published = results.getBoolean("Published");
-        Admin admin = adminDao.getAdminFromUserName(userName);
-        EducationalMaterials educationalMaterial = new EducationalMaterials(materialId,title,content,created,published,admin);
+//        Admin admin = adminDao.getAdminFromUserName(userName);
+        String username = results.getString(userName); 
+//        EducationalMaterials educationalMaterial = new EducationalMaterials(materialId,title,content,created,published,admin);
+        EducationalMaterials educationalMaterial = new EducationalMaterials(materialId,title,content,created,published,username);
         educationalMaterials.add(educationalMaterial);
       }
     } catch (SQLException e) {
